@@ -1,8 +1,8 @@
-package com.example.cleanarchitecture_mvvm.di;
+package com.example.presentation.di;
 
 
-import com.example.cleanarchitecture_mvvm.ui.di.MainModule;
-import com.example.cleanarchitecture_mvvm.ui.main.MainActivity;
+import com.example.presentation.ui.di.MainModule;
+import com.example.presentation.ui.main.MainActivity;
 
 import javax.inject.Singleton;
 

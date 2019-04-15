@@ -1,8 +1,6 @@
-package com.example.cleanarchitecture_mvvm.ui.main;
+package com.example.presentation.ui.main;
 
-import android.util.Log;
-
-import com.example.cleanarchitecture_mvvm.base.BaseViewModel;
+import com.example.presentation.base.BaseViewModel;
 import com.example.domain.usecases.GetSum;
 
 import io.reactivex.observers.DisposableSingleObserver;

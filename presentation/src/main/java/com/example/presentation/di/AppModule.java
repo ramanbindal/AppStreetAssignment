@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture_mvvm.di;
+package com.example.presentation.di;
 
 import android.content.Context;
 

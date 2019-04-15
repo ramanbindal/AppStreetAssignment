@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture_mvvm.ui.main;
+package com.example.presentation.ui.main;
 
 public interface MainNavigator {
 

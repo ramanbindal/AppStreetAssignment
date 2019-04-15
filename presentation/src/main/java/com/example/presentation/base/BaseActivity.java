@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture_mvvm.base;
+package com.example.presentation.base;
 
 import android.support.v7.app.AppCompatActivity;
 

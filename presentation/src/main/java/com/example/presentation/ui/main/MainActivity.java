@@ -1,17 +1,13 @@
-package com.example.cleanarchitecture_mvvm.ui.main;
+package com.example.presentation.ui.main;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.cleanarchitecture_mvvm.MainApplication;
-import com.example.cleanarchitecture_mvvm.R;
-import com.example.cleanarchitecture_mvvm.base.BaseActivity;
+import com.example.presentation.MainApplication;
+import com.example.presentation.R;
+import com.example.presentation.base.BaseActivity;
 
 import javax.inject.Inject;
 

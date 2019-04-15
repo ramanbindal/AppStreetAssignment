@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture_mvvm;
+package com.example.presentation;
 
 import org.junit.Test;
 

@@ -1,10 +1,10 @@
-package com.example.cleanarchitecture_mvvm;
+package com.example.presentation;
 
 import android.app.Application;
 
-import com.example.cleanarchitecture_mvvm.di.AppModule;
-import com.example.cleanarchitecture_mvvm.di.DaggerMyComponent;
-import com.example.cleanarchitecture_mvvm.di.MyComponent;
+import com.example.presentation.di.AppModule;
+import com.example.presentation.di.DaggerMyComponent;
+import com.example.presentation.di.MyComponent;
 
 public class MainApplication extends Application {
 
