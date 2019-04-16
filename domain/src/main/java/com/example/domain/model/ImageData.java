@@ -1,6 +1,8 @@
 package com.example.domain.model;
 
-public class ImageData {
+import java.io.Serializable;
+
+public class ImageData implements Serializable {
 
     String imageBas64;
     String title;

@@ -36,7 +36,7 @@ public class FetchPhotosUseCase extends SingleUseCase<List<ImageData>, FetchPhot
 
                                 for (int i = 0; i < apiResponse.getPhotos().getPhoto().size(); i++) {
                                     ImageData imageData = new ImageData();
-                                    singles.add(sampleRepository.fetchPhoto(apiResponse.getPhotos().getPhoto().get(i), params.tag)
+                                    singles.add(sampleRepository.fetchPhoto(apiResponse.getPhotos().getPhoto().get(i), params.tag,params.pageNumber)
                                             .onErrorReturnItem(imageData));
                                 }
 

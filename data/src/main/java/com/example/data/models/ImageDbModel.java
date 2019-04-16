@@ -23,16 +23,29 @@ public class ImageDbModel {
     @ColumnInfo(name = "title")
     private String title;
 
+    @NonNull
+    @ColumnInfo(name = "pageNumber")
+    private int pageNumber;
+
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "imageId")
     private String imageId;
 
-    public ImageDbModel(@NonNull String imageTag, @NonNull String imageBase64, @NonNull String title, @NonNull String imageId) {
+    public ImageDbModel(@NonNull String imageTag, @NonNull String imageBase64, @NonNull String title, int pageNumber, @NonNull String imageId) {
         this.imageTag = imageTag;
         this.imageBase64 = imageBase64;
         this.title = title;
+        this.pageNumber = pageNumber;
         this.imageId = imageId;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     @NonNull
@@ -43,7 +56,6 @@ public class ImageDbModel {
     public void setImageId(@NonNull String imageId) {
         this.imageId = imageId;
     }
-
 
     @NonNull
     public String getImageTag() {

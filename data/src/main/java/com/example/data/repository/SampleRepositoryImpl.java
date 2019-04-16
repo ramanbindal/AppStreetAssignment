@@ -6,7 +6,6 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.example.data.data.SampleRoomDatabase;
-import com.example.data.data.dao.SampleDao;
 import com.example.data.models.ApiResponseNw;
 import com.example.data.models.ImageDbModel;
 import com.example.data.models.PhotoNw;
@@ -95,7 +94,7 @@ public class SampleRepositoryImpl implements SampleRepository {
     }
 
     @Override
-    public Single<ImageData> fetchPhoto(Photo photo, String tag) {
+    public Single<ImageData> fetchPhoto(Photo photo, String tag, int pageNumber) {
         return Single.create(new SingleOnSubscribe<ImageData>() {
             @Override
             public void subscribe(SingleEmitter<ImageData> emitter) throws Exception {
@@ -137,7 +136,7 @@ public class SampleRepositoryImpl implements SampleRepository {
                         byte[] bytes = buffer.toByteArray();
                         String encoded = Base64.getEncoder().encodeToString(bytes);
 
-                        ImageDbModel imageDbModel = new ImageDbModel(tag, encoded, photo.getTitle(), photo.getId());
+                        ImageDbModel imageDbModel = new ImageDbModel(tag, encoded, photo.getTitle(),pageNumber ,photo.getId());
                         db.sampleDao().insertImage(imageDbModel);
 
                         ImageData imageData = new ImageData(encoded, photo.getTitle(), photo.getId(), tag);

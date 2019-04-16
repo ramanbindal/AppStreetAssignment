@@ -6,7 +6,6 @@ import com.example.domain.model.Photo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface SampleRepository {
@@ -15,7 +14,7 @@ public interface SampleRepository {
 
     Single<ApiResponse> fetchPhotoData(String tag,long pageNo);
 
-    Single<ImageData> fetchPhoto(Photo photo, String tag);
+    Single<ImageData> fetchPhoto(Photo photo, String tag, int pageNumber);
 
     Single<List<ImageData>> getFromDb(String tag);
 

@@ -4,7 +4,13 @@ import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -21,8 +28,11 @@ import com.example.domain.model.ImageData;
 import com.example.presentation.MainApplication;
 import com.example.presentation.R;
 import com.example.presentation.base.BaseActivity;
+import com.example.presentation.ui.second.FullScreenActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -67,7 +77,44 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
         toolbar.setTitle("Image Search");
         setSupportActionBar(toolbar);
 
+        gridView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View v,
+                                            int position, long id) {
 
+                        // Sending image id to FullScreenActivity
+//                Toast.makeText(MainActivity.this, "on click", Toast.LENGTH_SHORT).show();
+
+
+//                FullScreenActivity fullScreenActivity=new FullScreenActivity();
+//                fullScreenActivity.setImageDataList(imageDataList);
+
+                        FullScreenActivity.imageDataList = imageDataList;
+                        Intent i = new Intent(MainActivity.this, FullScreenActivity.class);
+//                i.putExtra("LIST", imageBase64List);
+                        i.putExtra("position", position);
+                        startActivity(i);
+
+//
+//                String transitionName = getString(R.string.transition_string);
+//
+//                // Define the view that the animation will start from
+//                View viewStart = findViewById(R.id.grid_view);
+//
+//                ActivityOptionsCompat options =
+//                        ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+//                                viewStart,   // Starting view
+//                                transitionName    // The String
+//                        );
+//                //Start the Intent
+//                ActivityCompat.startActivity(MainActivity.this, i, options.toBundle());
+                    }
+                });
+    }
+
+    public List<ImageData> getImageDataList() {
+        return imageDataList;
     }
 
     @Override
@@ -125,13 +172,23 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onListLoaded(List<ImageData> imageData) {
+
+        List<ImageData> temp = new ArrayList<>();
         for (ImageData imageData1 : imageData) {
             if (imageData1.getImageBas64() != null) {
-                imageDataList.add(imageData1);
+                temp.add(imageData1);
             }
         }
+        temp.sort(new Comparator<ImageData>() {
+            @Override
+            public int compare(ImageData o1, ImageData o2) {
+                return o1.getImageId().compareTo(o2.getImageId());
+            }
+        });
+        imageDataList.addAll(temp);
         progressBarlayout.setVisibility(View.GONE);
         int index = gridView.getLastVisiblePosition();
         adapter.setImageDataList(imageDataList);
@@ -178,8 +235,6 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
                              int visibleItemCount, int totalItemCount) {
-//         
-
         }
 
         @Override
@@ -188,8 +243,10 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
             int count = gridView.getCount();
 
             if (scrollState == SCROLL_STATE_IDLE) {
-                if (gridView.getLastVisiblePosition() >= count - threshold ) {
-                    // Execute LoadMoreDataTask AsyncTask
+//                Toast.makeText(MainActivity.this, "OnScroll idle", Toast.LENGTH_SHORT).show();
+
+                if (gridView.getLastVisiblePosition() >= count - threshold) {
+//                    Toast.makeText(MainActivity.this, "OnScroll", Toast.LENGTH_SHORT).show();
                     currentPage++;
                     progressBarlayout.setVisibility(View.VISIBLE);
                     mainViewModel.fetchPhotos(tag, currentPage);

@@ -18,7 +18,7 @@ public interface SampleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertImage(ImageDbModel imageDbModel);
 
-    @Query("select * from image_table where image_tag =:tag ")
+    @Query("select * from image_table where image_tag =:tag order by pageNumber asc,imageId asc")
     Single<List<ImageDbModel>> getAllImages(String tag);
 
 //    @Query("delete from ImageDbModel")
