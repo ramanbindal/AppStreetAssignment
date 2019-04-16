@@ -47,6 +47,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
             public void onSuccess(List<ImageData> imageData) {
                 if (imageData != null && !imageData.isEmpty()) {
                     getNavigator().onListLoaded(imageData);
+                    getNavigator().dataLoadedFromDb();
                 }
                 else
                 {

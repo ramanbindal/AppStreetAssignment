@@ -25,6 +25,10 @@ public class GridLayoutAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public void setImageDataList(List<ImageData> imageDataList) {
+        this.imageDataList = imageDataList;
+    }
+
     @Override
     public int getCount() {
         return imageDataList.size();
@@ -54,4 +58,5 @@ public class GridLayoutAdapter extends BaseAdapter {
         imageView.setLayoutParams(new GridView.LayoutParams(300,300));
         return imageView;
     }
+
 }

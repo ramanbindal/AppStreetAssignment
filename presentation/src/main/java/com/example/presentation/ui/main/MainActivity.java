@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -34,9 +35,11 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
 
     MainViewModel mainViewModel;
 
+    String tag = "";
     GridView gridView;
     FrameLayout progressBarlayout;
     List<ImageData> imageDataList = new ArrayList<>();
+    GridLayoutAdapter adapter;
 
     @Override
     public MainViewModel getViewModel() {
@@ -54,6 +57,10 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
         mainViewModel.setNavigator(this);
 
         gridView = (GridView) findViewById(R.id.grid_view);
+        gridView.setOnScrollListener(new EndlessScrollListener());
+        adapter = new GridLayoutAdapter(imageDataList, this);
+        gridView.setAdapter(adapter);
+
         progressBarlayout = findViewById(R.id.progress_bar_layout);
         progressBarlayout.setVisibility(View.GONE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -80,6 +87,7 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
             public boolean onQueryTextSubmit(String query) {
                 if (!query.trim().isEmpty()) {
                     imageDataList.clear();
+                    tag = query;
                     progressBarlayout.setVisibility(View.VISIBLE);
                     mainViewModel.fetchPhotos(query, 1);
                 } else {
@@ -125,12 +133,69 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
             }
         }
         progressBarlayout.setVisibility(View.GONE);
-        gridView.setAdapter(new GridLayoutAdapter(imageDataList, this));
+        int index = gridView.getLastVisiblePosition();
+        adapter.setImageDataList(imageDataList);
+        adapter.notifyDataSetChanged();
+        gridView.invalidate();
+
     }
 
     @Override
     public void noData() {
         progressBarlayout.setVisibility(View.GONE);
         Toast.makeText(this, "Not able to fetch data from Api and no data in db for this keyword", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void dataLoadedFromDb() {
+        gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+    }
+
+    public class EndlessScrollListener implements AbsListView.OnScrollListener {
+
+        private int visibleThreshold = 10;
+        private int currentPage = 1;
+        private int previousTotal = 0;
+        private boolean loading = true;
+
+        public EndlessScrollListener() {
+        }
+
+        public EndlessScrollListener(int visibleThreshold) {
+            this.visibleThreshold = visibleThreshold;
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+//         
+
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            int threshold = 1;
+            int count = gridView.getCount();
+
+            if (scrollState == SCROLL_STATE_IDLE) {
+                if (gridView.getLastVisiblePosition() >= count - threshold ) {
+                    // Execute LoadMoreDataTask AsyncTask
+                    currentPage++;
+                    progressBarlayout.setVisibility(View.VISIBLE);
+                    mainViewModel.fetchPhotos(tag, currentPage);
+
+                }
+            }
+        }
     }
 }

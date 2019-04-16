@@ -10,4 +10,7 @@ public interface MainNavigator {
     void onListLoaded(List<ImageData> imageData);
 
     void noData();
+
+    void dataLoadedFromDb();
+
 }
