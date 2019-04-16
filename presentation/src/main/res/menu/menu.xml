@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuSearch"
+        android:icon="@drawable/baseline_search_black_18dp"
+        android:orderInCategory="100"
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuTwo"
+        android:title="2 item per column" />
+
+    <item
+        android:id="@+id/menuThree"
+        android:title="3 item per column" />
+
+    <item
+        android:id="@+id/menuFour"
+        android:title="4 item per column" />
+
+</menu>

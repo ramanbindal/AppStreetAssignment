@@ -24,4 +24,12 @@ public class ApiResponse {
     public void setStat(String stat) {
         this.stat = stat;
     }
+
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "photos=" + photos +
+                ", stat='" + stat + '\'' +
+                '}';
+    }
 }

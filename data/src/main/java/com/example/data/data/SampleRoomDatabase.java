@@ -6,14 +6,14 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.example.data.data.dao.SampleDao;
-import com.example.data.models.SampleModel;
+import com.example.data.models.ImageDbModel;
 
 //When you modify the database schema, you'll need to update the version number and define how to handle migrations.
-@Database(entities = {SampleModel.class}, version = 5, exportSchema = false)
+@Database(entities = {ImageDbModel.class}, version = 1, exportSchema = false)
 public abstract class SampleRoomDatabase extends RoomDatabase {
 
     //list all the DAOs abstract function here so that they can be used in Repository
-    public abstract SampleDao wordDao();
+    public abstract SampleDao sampleDao();
 
     //make this class a Singleton class so that only one instance of this class can be used fot the database operation
     private static SampleRoomDatabase INSTANCE;
@@ -25,7 +25,7 @@ public abstract class SampleRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     // Create database here
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SampleRoomDatabase.class, "word_database")
+                            SampleRoomDatabase.class, "image_database")
                             .build();
                 }
             }

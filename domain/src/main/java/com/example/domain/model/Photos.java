@@ -59,4 +59,15 @@ public class Photos {
     public void setPhoto(List<Photo> photo) {
         this.photo = photo;
     }
+
+    @Override
+    public String toString() {
+        return "Photos{" +
+                "page=" + page +
+                ", pages=" + pages +
+                ", perpage=" + perpage +
+                ", total='" + total + '\'' +
+                ", photo=" + photo +
+                '}';
+    }
 }

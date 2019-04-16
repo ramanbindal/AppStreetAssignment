@@ -1,6 +1,8 @@
 package com.example.domain.repository;
 
 import com.example.domain.model.ApiResponse;
+import com.example.domain.model.ImageData;
+import com.example.domain.model.Photo;
 
 import java.util.List;
 
@@ -13,8 +15,9 @@ public interface SampleRepository {
 
     Single<ApiResponse> fetchPhotoData(String tag,long pageNo);
 
-    Single<Boolean> fetchPhoto();
+    Single<ImageData> fetchPhoto(Photo photo, String tag);
 
+    Single<List<ImageData>> getFromDb(String tag);
 
 
 

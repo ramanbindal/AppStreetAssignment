@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ApiClient {
-    private static String SERVER_BASE_URL = "http://api.flickr.com/services/";
+    private static String SERVER_BASE_URL = "https://api.flickr.com/services/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

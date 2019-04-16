@@ -97,4 +97,19 @@ public class Photo {
     public void setIsfamily(Long isfamily) {
         this.isfamily = isfamily;
     }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id='" + id + '\'' +
+                ", owner='" + owner + '\'' +
+                ", secret='" + secret + '\'' +
+                ", server='" + server + '\'' +
+                ", farm=" + farm +
+                ", title='" + title + '\'' +
+                ", ispublic=" + ispublic +
+                ", isfriend=" + isfriend +
+                ", isfamily=" + isfamily +
+                '}';
+    }
 }
