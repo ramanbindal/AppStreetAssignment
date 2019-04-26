@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.domain.model.ImageData;
 import com.example.presentation.R;
 
@@ -39,10 +40,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         byte[] decodedString = Base64.decode(data.get(position).getImageBas64(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        Glide.with(mContext)
+//                .load(decodedString)
+//                .into(imageView);
 
+//        imageView.setImageBitmap(data.get(position));
 
         imageView.setImageBitmap(decodedByte);
-
         collection.addView(layout);
         return layout;
     }
