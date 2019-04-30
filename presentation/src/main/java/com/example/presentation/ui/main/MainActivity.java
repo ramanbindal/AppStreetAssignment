@@ -113,9 +113,6 @@ public class MainActivity extends BaseActivity<MainViewModel> implements MainNav
                 });
     }
 
-    public List<ImageData> getImageDataList() {
-        return imageDataList;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
