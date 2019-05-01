@@ -27,8 +27,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.domain.model.ImageData;
 import com.example.presentation.R;
-import com.example.presentation.ui.Main2Activity;
+import com.example.presentation.ui.MainActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -45,15 +46,18 @@ public class ImagePagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         viewPager = (ViewPager) inflater.inflate(R.layout.fragment_pager, container, false);
-        viewPager.setAdapter(new ImagePagerAdapter(this));
+
+        List<ImageData> imageDataList= MainActivity.getImageDataList();
+        viewPager.setAdapter(new ImagePagerAdapter(this,imageDataList));
         // Set the current position and add a listener that will update the selection coordinator when
         // paging the images.
-        viewPager.setCurrentItem(Main2Activity.currentPosition);
+        viewPager.setCurrentItem(MainActivity.currentPosition);
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                Main2Activity.currentPosition = position;
+                MainActivity.currentPosition = position;
             }
         });
 
@@ -86,7 +90,7 @@ public class ImagePagerFragment extends Fragment {
                         // At this stage, the method will simply return the fragment at the position and will
                         // not create a new one.
                         Fragment currentFragment = (Fragment) viewPager.getAdapter()
-                                .instantiateItem(viewPager, Main2Activity.currentPosition);
+                                .instantiateItem(viewPager, MainActivity.currentPosition);
                         View view = currentFragment.getView();
                         if (view == null) {
                             return;

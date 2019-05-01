@@ -1,23 +1,20 @@
-package com.example.presentation.ui.main;
-
-import android.util.Log;
+package com.example.presentation.ui.firstFragment;
 
 import com.example.domain.model.ImageData;
 import com.example.domain.usecases.FetchPhotosUseCase;
 import com.example.domain.usecases.GetImagesFromDb;
 import com.example.presentation.base.BaseViewModel;
-import com.example.domain.usecases.GetSum;
 
 import java.util.List;
 
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class MainViewModel extends BaseViewModel<MainNavigator> {
+public class GridFragmentViewModel extends BaseViewModel<GridFragmentNavigator> {
 
     private FetchPhotosUseCase fetchPhotosUseCase;
     private GetImagesFromDb getImagesFromDb;
 
-    public MainViewModel(FetchPhotosUseCase fetchPhotosUseCase, GetImagesFromDb getImagesFromDb) {
+    public GridFragmentViewModel(FetchPhotosUseCase fetchPhotosUseCase, GetImagesFromDb getImagesFromDb) {
         this.fetchPhotosUseCase = fetchPhotosUseCase;
         this.getImagesFromDb = getImagesFromDb;
     }

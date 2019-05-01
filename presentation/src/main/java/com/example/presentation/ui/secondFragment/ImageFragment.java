@@ -16,12 +16,14 @@
 
 package com.example.presentation.ui.secondFragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +43,12 @@ public class ImageFragment extends Fragment {
 
     private static final String KEY_IMAGE_RES = "key.imageRes";
 
-    public static ImageFragment newInstance(@DrawableRes int drawableRes) {
+    String imageBase64="";
+
+    public static ImageFragment newInstance(String drawableRes) {
         ImageFragment fragment = new ImageFragment();
         Bundle argument = new Bundle();
-        argument.putInt(KEY_IMAGE_RES, drawableRes);
+        argument.putString(KEY_IMAGE_RES, drawableRes);
         fragment.setArguments(argument);
         return fragment;
     }
@@ -56,15 +60,19 @@ public class ImageFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_image, container, false);
 
         Bundle arguments = getArguments();
-        @DrawableRes int imageRes = arguments.getInt(KEY_IMAGE_RES);
+        String imageRes = arguments.getString(KEY_IMAGE_RES);
+
+        byte[] decodedString = Base64.decode(imageRes, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
 
         // Just like we do when binding views at the grid, we set the transition name to be the string
         // value of the image res.
-        view.findViewById(R.id.image).setTransitionName(String.valueOf(imageRes));
+        view.findViewById(R.id.image).setTransitionName(String.valueOf(decodedByte));
 
         // Load the image with Glide to prevent OOM error when the image drawables are very large.
         Glide.with(this)
-                .load(imageRes)
+                .load(decodedByte)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable>

@@ -19,25 +19,27 @@ package com.example.presentation.ui.secondFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import com.example.domain.model.ImageData;
 
-import static com.google.samples.gridtopager.adapter.ImageData.IMAGE_DRAWABLES;
+import java.util.List;
+
 
 public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
-  public ImagePagerAdapter(Fragment fragment) {
-    // Note: Initialize with the child fragment manager.
-    super(fragment.getChildFragmentManager());
-  }
+    List<ImageData> imageDataList;
 
-  @Override
-  public int getCount() {
-    return 2;
-  }
+    public ImagePagerAdapter(Fragment fragment, List<ImageData> imageDataList) {
+        super(fragment.getChildFragmentManager());
+        this.imageDataList = imageDataList;
+    }
 
-  @Override
-  public Fragment getItem(int position) {
-    return ImageFragment.newInstance(IMAGE_DRAWABLES[position]);
-  }
+    @Override
+    public int getCount() {
+        return imageDataList.size();
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return ImageFragment.newInstance(imageDataList.get(position).getImageBas64());
+    }
 }

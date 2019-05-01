@@ -4,19 +4,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.domain.model.ImageData;
 import com.example.presentation.R;
 import com.example.presentation.ui.firstFragment.GridFragment;
 
-public class Main2Activity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
 
 
     public static int currentPosition;
-    private static final String KEY_CURRENT_POSITION = "com.google.samples.gridtopager.key.currentPosition";
+    public static List<ImageData> imageDataList = new ArrayList<>();
+    private static final String KEY_CURRENT_POSITION = "key.currentPosition";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(KEY_CURRENT_POSITION, 0);
             // Return here to prevent adding additional GridFragments when changing orientation.
@@ -27,6 +32,14 @@ public class Main2Activity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fragment_container, new GridFragment(), GridFragment.class.getSimpleName())
                 .commit();
+    }
+
+    public static void setImageDataList(List<ImageData> imageDataList) {
+        MainActivity.imageDataList = imageDataList;
+    }
+
+    public static List<ImageData> getImageDataList() {
+        return imageDataList;
     }
 
     @Override

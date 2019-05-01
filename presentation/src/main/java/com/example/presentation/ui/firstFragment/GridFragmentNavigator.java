@@ -1,16 +1,13 @@
-package com.example.presentation.ui.main;
+package com.example.presentation.ui.firstFragment;
 
 import com.example.domain.model.ImageData;
 
 import java.util.List;
 
-public interface MainNavigator {
-
-
+public interface GridFragmentNavigator {
     void onListLoaded(List<ImageData> imageData);
 
     void noData();
 
     void dataLoadedFromDb();
-
 }
