@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int currentPosition;
     public static List<ImageData> imageDataList = new ArrayList<>();
+    public static int columnCount=2;
     private static final String KEY_CURRENT_POSITION = "key.currentPosition";
 
     @Override
@@ -28,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
+        fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, new GridFragment(), GridFragment.class.getSimpleName())
                 .commit();
     }
@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<ImageData> getImageDataList() {
         return imageDataList;
+    }
+
+    public static int getColumnCount() {
+        return columnCount;
+    }
+
+    public static void setColumnCount(int columnCount) {
+        MainActivity.columnCount = columnCount;
     }
 
     @Override

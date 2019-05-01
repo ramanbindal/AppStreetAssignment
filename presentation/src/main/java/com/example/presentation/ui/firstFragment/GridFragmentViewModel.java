@@ -43,8 +43,8 @@ public class GridFragmentViewModel extends BaseViewModel<GridFragmentNavigator> 
             @Override
             public void onSuccess(List<ImageData> imageData) {
                 if (imageData != null && !imageData.isEmpty()) {
-                    getNavigator().onListLoaded(imageData);
-                    getNavigator().dataLoadedFromDb();
+                    getNavigator().dataLoadedFromDb(imageData);
+//                    getNavigator().onListLoaded(imageData);
                 }
                 else
                 {

@@ -9,5 +9,5 @@ public interface GridFragmentNavigator {
 
     void noData();
 
-    void dataLoadedFromDb();
+    void dataLoadedFromDb(List<ImageData> imageData);
 }

@@ -24,6 +24,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionSet;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +50,27 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ImageViewHolde
     private final RequestManager requestManager;
     private final ViewHolderListener viewHolderListener;
     List<ImageData> imageDataList;
+    int screenWidth, columnCount;
 
+
+    public GridAdapter(Fragment fragment, List<ImageData> imageData, int screenWidth, int columnCount) {
+        this.imageDataList = imageData;
+        this.requestManager = Glide.with(fragment);
+        this.viewHolderListener = new ViewHolderListenerImpl(fragment);
+        this.columnCount = columnCount;
+        this.screenWidth = screenWidth;
+    }
 
     public void setImageDataList(List<ImageData> imageDataList) {
         this.imageDataList = imageDataList;
     }
 
-    public GridAdapter(Fragment fragment, List<ImageData> imageData) {
-        this.imageDataList = imageData;
-        this.requestManager = Glide.with(fragment);
-        this.viewHolderListener = new ViewHolderListenerImpl(fragment);
+    public void setScreenWidth(int screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
     }
 
     @Override
@@ -70,12 +82,21 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ImageViewHolde
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
+        Log.e("raman", "screen width " + screenWidth + "  coloun -" + columnCount);
+        int itemSize = screenWidth / columnCount;
+        holder.imageView.getLayoutParams().width = itemSize;
+        holder.imageView.getLayoutParams().height = itemSize;
         holder.onBind(imageDataList);
     }
 
     @Override
     public int getItemCount() {
         return imageDataList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
 

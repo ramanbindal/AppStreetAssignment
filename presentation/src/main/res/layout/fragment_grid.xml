@@ -40,4 +40,5 @@
         android:scrollbars="vertical"
         app:layoutManager="GridLayoutManager"
         app:spanCount="2" />
+
 </RelativeLayout>

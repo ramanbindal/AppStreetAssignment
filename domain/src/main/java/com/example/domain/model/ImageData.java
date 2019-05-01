@@ -54,7 +54,7 @@ public class ImageData implements Serializable {
     @Override
     public String toString() {
         return "ImageData{" +
-                "imageBas64='" + imageBas64 + '\'' +
+
                 ", title='" + title + '\'' +
                 ", imageId='" + imageId + '\'' +
                 ", tag='" + tag + '\'' +

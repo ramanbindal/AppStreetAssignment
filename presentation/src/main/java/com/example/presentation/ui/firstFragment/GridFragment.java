@@ -31,6 +31,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -74,6 +76,7 @@ public class GridFragment extends BaseFragment<GridFragmentViewModel> implements
 
     String tag = "";
     List<ImageData> imageDataList = new ArrayList<>();
+    int screenWidth = 600;
 
 
     @Override
@@ -91,10 +94,20 @@ public class GridFragment extends BaseFragment<GridFragmentViewModel> implements
 
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
 
+
         recyclerView = view.findViewById(R.id.recycler_view);
-        adapter = new GridAdapter(this, imageDataList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), MainActivity.getColumnCount()));
+        adapter = new GridAdapter(this, imageDataList, screenWidth, MainActivity.getColumnCount());
         recyclerView.setAdapter(adapter);
 
+
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                screenWidth = view.getWidth();
+                adapter.setScreenWidth(screenWidth);
+            }
+        });
 
         progressBarlayout = view.findViewById(R.id.progress_bar_layout);
         progressBarlayout.setVisibility(View.GONE);
@@ -150,15 +163,24 @@ public class GridFragment extends BaseFragment<GridFragmentViewModel> implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuTwo:
+                MainActivity.setColumnCount(2);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                adapter.setColumnCount(2);
+                adapter.notifyDataSetChanged();
                 break;
 
             case R.id.menuThree:
+                MainActivity.setColumnCount(3);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                adapter.setColumnCount(3);
+                adapter.notifyDataSetChanged();
                 break;
 
             case R.id.menuFour:
+                MainActivity.setColumnCount(4);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                adapter.setColumnCount(4);
+                adapter.notifyDataSetChanged();
                 break;
 
         }
@@ -290,7 +312,6 @@ public class GridFragment extends BaseFragment<GridFragmentViewModel> implements
         imageDataList.addAll(temp);
         MainActivity.setImageDataList(imageDataList);
         progressBarlayout.setVisibility(View.GONE);
-        //todo recycler view ka adapter
         adapter.setImageDataList(imageDataList);
         adapter.notifyDataSetChanged();
     }
@@ -302,10 +323,21 @@ public class GridFragment extends BaseFragment<GridFragmentViewModel> implements
     }
 
     @Override
-    public void dataLoadedFromDb() {
+    public void dataLoadedFromDb(List<ImageData> imageData) {
         Toast.makeText(getContext(), "Data Loaded from Db", Toast.LENGTH_SHORT).show();
-        //todo remove recycler view infinte scroll
 
         isLoading = true;
+
+        List<ImageData> temp = new ArrayList<>();
+        for (ImageData imageData1 : imageData) {
+            if (imageData1.getImageBas64() != null) {
+                temp.add(imageData1);
+            }
+        }
+        imageDataList.addAll(temp);
+        MainActivity.setImageDataList(imageDataList);
+        progressBarlayout.setVisibility(View.GONE);
+        adapter.setImageDataList(imageDataList);
+        adapter.notifyDataSetChanged();
     }
 }
